@@ -16,6 +16,9 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
 
+  String _textOcr = '';
+  String _idcardOcr = '';
+  
   @override
   void initState() {
     super.initState();
@@ -59,7 +62,43 @@ class _MyAppState extends State<MyApp> {
                 print(res);
               },
             ),
+            FlatButton(
+              child: Text("文本ocr识别"),
+              color: Colors.blue,
+              textColor: Colors.white,
+              disabledColor: Colors.grey,
+              disabledTextColor: Colors.black,
+              padding: EdgeInsets.all(8.0),
+              splashColor: Colors.blueAccent,
+              onPressed: () async {
+                Map<String, dynamic> res = await FlutterBaiduOcr.ocrText();
+                print("文本ocr识别: ${res.toString()}");
+                setState(() {
+                  _textOcr = res.toString();
+                });
+              },
+            ),
+            Text(_textOcr),
+            Divider(),
+            FlatButton(
+              child: Text("身份证识别"),
+              color: Colors.blue,
+              textColor: Colors.white,
+              disabledColor: Colors.grey,
+              disabledTextColor: Colors.black,
+              padding: EdgeInsets.all(8.0),
+              splashColor: Colors.blueAccent,
+              onPressed: () async {
+                Map<String, dynamic> res = await FlutterBaiduOcr.idcardOCR();
+                print("身份证识别: ${res.toString()}");
+                setState(() {
+                  _idcardOcr = res.toString();
+                });
+              },
+            ),
+            Text(_idcardOcr),
           ],
+
         ),
       ),
     );
